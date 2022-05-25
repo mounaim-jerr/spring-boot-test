@@ -1,11 +1,13 @@
 package testcom.example.firsttest;
 
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(value = "/testModels")
@@ -22,5 +24,9 @@ public class FirstTestController {
     @RequestMapping(value ="/all",method = RequestMethod.GET)
     public List<TestModel> getAll(){
         return testModels;
+    }
+@RequestMapping(value = "ages/{ages}", method = RequestMethod.GET)
+    public List<TestModel> getAges(@PathVariable double ages) {
+        return testModels.stream().filter( x ->  x.getClientAge() <= ages).collect(Collectors.toList());
     }
 }
